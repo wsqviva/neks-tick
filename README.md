@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/wsqviva/neks-tick.png)](https://travis-ci.org/wsqviva/neks-tick)
+[![codecov](https://codecov.io/gh/wsqviva/neks-tick/branch/master/graph/badge.svg)](https://codecov.io/gh/wsqviva/neks-tick)
+
 
 ### install
 `npm install neks-tick --save`
