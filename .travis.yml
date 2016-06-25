@@ -6,3 +6,8 @@ sudo: false
 cache:
   directories:
     - node_modules
+env:
+  gloabl:
+    - CODECOV_TOKEN: 4d0a2cc8-bafc-48ff-b2ea-887e91f50880
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
