@@ -1,1 +1,288 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports["niks-tick"]=e():t["niks-tick"]=e()}(this,function(){return function(t){function e(o){if(n[o])return n[o].exports;var r=n[o]={exports:{},id:o,loaded:!1};return t[o].call(r.exports,r,r.exports,e),r.loaded=!0,r.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){n(1)},function(t,e,n){(function(e,n){"use strict";function o(){for(var t,e,n;r;)t=r.fn,e=r.context,n=r.args,r=r.next,t.apply(e,n);i=void 0}var r,i,c=function(){var t;if("[object process]"===Object.prototype.toString.call(e))t=function(){e.nextTick(o)};else if("undefined"!=typeof MutationObserver){var c=!0,s=new MutationObserver(o),u=document.createTextNode("");s.observe(u,{characterData:!0}),t=function(){u.data=c=!c}}else if(Promise&&Promise.resolve){var f=Promise.resolve();t=function(){f.then(o)}}else{var a="undefined"!=typeof window&&"[object Object]"!==Object.prototype.toString.call(window),d=a?window:"undefined"!=typeof n?n:{};t=d.setImmediate||function(){setTimeout(o,0)}}return function(e,n,o){var c={fn:e,context:n,args:Array.prototype.slice.call(arguments,2),next:void 0};i&&(i.next=c),r||(r=c,t()),i=c}}();t.exports=c}).call(e,n(2),function(){return this}())},function(t,e){function n(){d&&f&&(d=!1,f.length?a=f.concat(a):l=-1,a.length&&o())}function o(){if(!d){var t=c(n);d=!0;for(var e=a.length;e;){for(f=a,a=[];++l<e;)f&&f[l].run();l=-1,e=a.length}f=null,d=!1,s(t)}}function r(t,e){this.fun=t,this.array=e}function i(){}var c,s,u=t.exports={};!function(){try{c=setTimeout}catch(t){c=function(){throw new Error("setTimeout is not defined")}}try{s=clearTimeout}catch(t){s=function(){throw new Error("clearTimeout is not defined")}}}();var f,a=[],d=!1,l=-1;u.nextTick=function(t){var e=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)e[n-1]=arguments[n];a.push(new r(t,e)),1!==a.length||d||c(o,0)},r.prototype.run=function(){this.fun.apply(null,this.array)},u.title="browser",u.browser=!0,u.env={},u.argv=[],u.version="",u.versions={},u.on=i,u.addListener=i,u.once=i,u.off=i,u.removeListener=i,u.removeAllListeners=i,u.emit=i,u.binding=function(t){throw new Error("process.binding is not supported")},u.cwd=function(){return"/"},u.chdir=function(t){throw new Error("process.chdir is not supported")},u.umask=function(){return 0}}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["niksTick"] = factory();
+	else
+		root["niksTick"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process, global) {'use strict';
+
+	var inBrowser = typeof window !== 'undefined' && Object.prototype.toString.call(window) !== '[object Object]';
+	var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+	var isIos = UA && /(iphone|ipad|ipod|ios)/i.test(UA);
+	var iosVersionMatch = isIos && UA.match(/os ([\d_]+)/);
+	var iosVersion = iosVersionMatch && iosVersionMatch[1].split('_');
+	var hasMutationObserverBug = iosVersion &&
+	  Number(iosVersion[0]) >= 9 &&
+	  Number(iosVersion[1]) >= 3 &&
+	  !window.indexedDB;
+
+	var head;
+	var tail;
+
+	function drain() {
+	  var fn;
+	  var context;
+	  var args;
+	  while (head) {
+	    fn = head.fn;
+	    context = head.context;
+	    args = head.args;
+
+	    head = head.next;
+
+	    // TODO: fn error handle
+	    fn.apply(context, args);
+	  }
+
+	  tail = undefined;
+	}
+
+	var nextTick = (function() {
+	  var notify;
+
+	  /* istanbul ignore next */
+	  // isNode
+	  if (typeof process === 'object' && Object.prototype.toString.call(process) === '[object process]') {
+	    notify = function() {
+	      process.nextTick(drain);
+	    };
+	  // browser with MutationObserver
+	  } else if (typeof MutationObserver !== 'undefined' && !hasMutationObserverBug) {
+	    var toggle = true;
+	    var observer = new MutationObserver(drain);
+	    var textNode = document.createTextNode('');
+	    observer.observe(textNode, {
+	      characterData: true
+	    });
+	    notify = function() {
+	      textNode.data = toggle = !toggle;
+	    };
+	  // environments with Promise (maybe non-completely correct)
+	  } else if (Promise && Promise.resolve) {
+	    var promise = Promise.resolve();
+	    notify = function() {
+	      promise.then(drain);
+	    };
+	  // other environments
+	  } else {
+	    var env = inBrowser ?
+	      window :
+	      typeof global !== 'undefined' ? global : {};
+	    notify = env.setImmediate || function() {
+	      setTimeout(drain, 0);
+	    };
+	  }
+
+	  return function(fn, context, args) {
+	    var task = {
+	      fn: fn,
+	      context: context,
+	      args: Array.prototype.slice.call(arguments, 2),
+	      next: undefined
+	    };
+
+	    /* istanbul ignore if */
+	    if (tail) {
+	      tail.next = task;
+	    }
+
+	    /* istanbul ignore next */
+	    if (!head) {
+	      head = task;
+	      notify();
+	    }
+
+	    tail = task;
+	  };
+	})();
+
+	module.exports = nextTick;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), (function() { return this; }())))
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+
+	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    cachedClearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        cachedSetTimeout(drainQueue, 0);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ }
+/******/ ])
+});
+;

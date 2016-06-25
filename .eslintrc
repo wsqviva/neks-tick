@@ -1,8 +1,20 @@
 {
   root: true,
-  "extends": "standard"
+  "extends": "standard",
   "env": {
     "browser": true,
     "node": true
+  },
+  "rules": {
+    // 语句强制分号结尾
+    "semi": ["error", "always"],
+    // 函数定义时括号前面要不要有空格
+    "space-before-function-paren": ["off", "always"],
+    // 一行结束后面不要有空格
+    "no-trailing-spaces": 0,
+    // 换行时运算符在行尾还是行首
+    "operator-linebreak": 0,
+    // 文件以单一的换行符结束
+    "eol-last": 0
   }
 }
