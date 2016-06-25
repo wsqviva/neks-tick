@@ -1,5 +1,5 @@
 'use strict';
-var expect = require('chai').expect;
+
 var nextTick = require('../lib/neks-tick');
 
 describe('nextTick', function() {
