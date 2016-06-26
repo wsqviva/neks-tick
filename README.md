@@ -3,11 +3,13 @@
 [![npmversion](https://img.shields.io/npm/v/neks-tick.svg)](https://www.npmjs.com/package/neks-tick)
 [![liscense](https://img.shields.io/npm/l/neks-tick.svg)](https://www.npmjs.com/package/neks-tick)
 
-### install
+## Install
+
 `npm install neks-tick --save`
 
-### usage
-```javascript
+## Usage
+
+```js
 var nextTick = require('neks-tick');
 
 nextTick(function() {
@@ -18,3 +20,7 @@ nextTick(function() {
 // fisrt log 1
 console.log(1);
 ```
+
+## License
+
+MIT
