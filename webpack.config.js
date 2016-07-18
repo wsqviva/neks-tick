@@ -10,7 +10,7 @@ var config = {
   output: {
     filename: 'neks-tick.js',
     path: __dirname + '/dist',
-    library: 'niksTick',
+    library: 'neksTick',
     libraryTarget: 'umd'
   },
   module: {
