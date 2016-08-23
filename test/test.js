@@ -3,6 +3,7 @@
 var nextTick = require('../lib/neks-tick');
 
 describe('nextTick', function() {
+  // neks-tick async features like nextTick
   it('should provide process.nextTick shim', function(done) {
     var called = false;
 
@@ -14,6 +15,7 @@ describe('nextTick', function() {
     expect(called).to.be.false;
   });
 
+  // nesk-tick accept context and args
   it('should accept args in order', function(done) {
     nextTick(function(a, b) {
       expect(a).to.equal(1);
@@ -21,7 +23,7 @@ describe('nextTick', function() {
       done();
     }, null, 1, 2);
   });
-
+  
   it('should run sequence in their event loop respectively', function(done) {
     var count = 0;
 
