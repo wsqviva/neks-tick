@@ -1,6 +1,6 @@
 {
   "name": "neks-tick",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "nextTick polyfiil for node.js and the browser environment",
   "main": "dist/next-tick.js",
   "directories": {
