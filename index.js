@@ -1,1 +1,1 @@
-require('./lib/neks-tick');
+module.exports = require('./lib/neks-tick');
