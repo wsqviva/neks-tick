@@ -17,7 +17,7 @@ nextTick(function() {
   console.log(2);
 });
 
-// fisrt log 1
+// first log 1
 console.log(1);
 ```
 
